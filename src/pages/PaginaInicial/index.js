@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, Animated, Keyboard} from 'react-native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Estilos from './style';
 
 const PaginaInicial = ({ navigation }) => {
@@ -83,16 +84,18 @@ const PaginaInicial = ({ navigation }) => {
             navigation.navigate('Login')
           }
         >
+          
           <Text
             style={Estilos.submitText}
-          >Acessar com Email e Senha</Text>
+          ><FontAwesome5 name={'envelope'} size={20} />    Acessar com Email e Senha</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={Estilos.btnGoogle}
         >
+            
           <Text
             style={Estilos.submitText}
-          >Acessar com o Google</Text>
+          ><FontAwesome5 name={'google'} size={20}  />    Acessar com o Google</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={Estilos.btnRegister}
