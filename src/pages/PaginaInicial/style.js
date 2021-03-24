@@ -28,7 +28,20 @@ export default StyleSheet.create({
         borderRadius: 10,
         padding: 10,
     },
-    btnSubmit:{
+    btnEmail:{
+        borderWidth: 2,
+        borderColor: 'black',
+        backgroundColor: '#ffb745',
+        width: '90%',
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 10,
+        marginBottom: 15,
+    },
+    btnGoogle:{
+        borderWidth: 2,
+        borderColor: 'black',
         backgroundColor: '#ffb745',
         width: '90%',
         height: 45,

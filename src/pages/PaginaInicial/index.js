@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { View, Text, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, Animated, Keyboard} from 'react-native';
 import Estilos from './style';
 
-const Login = ({ navigation }) => {
+const PaginaInicial = ({ navigation }) => {
 
   const [offset] = useState(new Animated.ValueXY({x: 0, y: 80}));
   const [opacity] = useState(new Animated.Value(0));
@@ -76,31 +76,30 @@ const Login = ({ navigation }) => {
       ]}
       
       >
-        <TextInput 
-        style={Estilos.input}
-        placeholder="Email"
-        autoCorrect={false}
-        onChangeText={() => {}}
-        />
-        <TextInput 
-        style={Estilos.input}
-        placeholder="Senha"
-        autoCorrect={false}
-        onChangeText={() => {}}
-        />
+        
         <TouchableOpacity
-          style={Estilos.btnSubmit}
+          style={Estilos.btnEmail}
+          onPress={() =>
+            navigation.navigate('Login')
+          }
         >
           <Text
             style={Estilos.submitText}
-          >Acessar</Text>
+          >Acessar com Email e Senha</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={Estilos.btnGoogle}
+        >
+          <Text
+            style={Estilos.submitText}
+          >Acessar com o Google</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={Estilos.btnRegister}
         >
           <Text
             style={Estilos.registerText}
-          >Não possui cadastro? Clique aqui</Text>
+          >Criar conta</Text>
         </TouchableOpacity>
       </Animated.View>
 
@@ -108,4 +107,4 @@ const Login = ({ navigation }) => {
   );
 }
 
-export default Login;
+export default PaginaInicial;
