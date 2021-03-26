@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "746176571859",
+    "project_id": "faz-tudo-react-native",
+    "storage_bucket": "faz-tudo-react-native.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746176571859:android:7b64b5cea8dfd6706aa726",
+        "android_client_info": {
+          "package_name": "com.faztudo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746176571859-hfujidd0v5piakmv1lvpc0bpeq44inoj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1jRZxashWEsioqFz_hvC_2hVjxQyxY4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746176571859-hfujidd0v5piakmv1lvpc0bpeq44inoj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

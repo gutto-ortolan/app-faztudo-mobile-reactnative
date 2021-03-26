@@ -1,9 +1,12 @@
-import * as React from 'react';
+import React from 'react';
 import MainStack from './src/pages/MainStack';
+import {AuthProvider} from './src/provider/AuthProvider';
 
 const App = () => {
   return (
-    <MainStack />
+    <AuthProvider>
+      <MainStack />
+    </AuthProvider>
   );
 };
 
