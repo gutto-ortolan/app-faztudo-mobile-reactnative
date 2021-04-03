@@ -6,7 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-import HomeScreen from '../pages/Home';
+import HomeScreen from '../pages/cliente/ServicosContratados';
 //import ChatScreen from '../pages/ChatScreen';
 import ProfileScreen from '../pages/Perfil';
 //import AddPostScreen from '../screens/AddPostScreen';
