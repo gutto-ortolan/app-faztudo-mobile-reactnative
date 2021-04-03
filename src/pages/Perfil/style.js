@@ -16,22 +16,18 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '90%',
-    paddingBottom: 50,
   },
-  btnEmail: {
+  input: {
+    backgroundColor: 'white',
     borderWidth: 2,
     borderColor: 'black',
-    backgroundColor: '#ffb745',
     width: '90%',
-    height: 45,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 10,
     marginBottom: 15,
+    fontSize: 17,
+    borderRadius: 10,
+    padding: 10,
   },
-  btnGoogle: {
-    borderWidth: 2,
-    borderColor: 'black',
+  btnSubmit: {
     backgroundColor: '#ffb745',
     width: '90%',
     height: 45,
@@ -48,5 +44,20 @@ export default StyleSheet.create({
   },
   registerText: {
     color: '#222',
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
+    justifyContent: 'space-between',
+  },
+  checkboxPrincipal: {
+    width: '75%',
+  },
+  label: {
+    marginRight: 8,
+  },
+  labelSecundario: {
+    marginRight: 8,
+    fontSize: 12,
   },
 });

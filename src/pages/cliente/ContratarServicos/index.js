@@ -3,8 +3,8 @@ import {View} from 'react-native';
 
 import Estilo from './style';
 
-const Perfil = () => {
+const ContratarServicos = () => {
   return <View />;
 };
 
-export default Perfil;
+export default ContratarServicos;
