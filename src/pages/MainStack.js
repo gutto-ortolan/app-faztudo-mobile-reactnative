@@ -5,7 +5,7 @@ import Login from './Login';
 import Cadastro from './Cadastro';
 import PaginaInicial from './PaginaInicial';
 import auth from '@react-native-firebase/auth';
-import {AuthContext} from '../provider/AuthProvider';
+import {AuthContext} from '../navigation/AuthProvider';
 
 const Stack = createStackNavigator();
 
@@ -13,7 +13,6 @@ const MyStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="PaginaInicial" component={PaginaInicial} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Cadastro" component={Cadastro} />
       </Stack.Navigator>

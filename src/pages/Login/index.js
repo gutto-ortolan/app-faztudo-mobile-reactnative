@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   View,
   Text,
@@ -10,11 +10,16 @@ import {
   Keyboard,
 } from 'react-native';
 import Estilos from './style';
+import {AuthContext} from '../../navigation/AuthProvider';
 
 const Login = ({navigation}) => {
   const [offset] = useState(new Animated.ValueXY({x: 0, y: 80}));
   const [opacity] = useState(new Animated.Value(0));
   const [logo] = useState(new Animated.ValueXY({x: 220, y: 245}));
+
+  const {login} = useContext(AuthContext);
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
 
   useEffect(() => {
     keyboardDidShowListener = Keyboard.addListener(
@@ -88,15 +93,17 @@ const Login = ({navigation}) => {
           style={Estilos.input}
           placeholder="Email"
           autoCorrect={false}
-          onChangeText={() => {}}
+          onChangeText={setEmail}
         />
         <TextInput
           style={Estilos.input}
           placeholder="Senha"
           autoCorrect={false}
-          onChangeText={() => {}}
+          onChangeText={setPassword}
         />
-        <TouchableOpacity style={Estilos.btnSubmit}>
+        <TouchableOpacity
+          style={Estilos.btnSubmit}
+          onPress={() => login(email, password)}>
           <Text style={Estilos.submitText}>Acessar</Text>
         </TouchableOpacity>
         <TouchableOpacity

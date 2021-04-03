@@ -1,13 +1,8 @@
 import React from 'react';
-import MainStack from './src/pages/MainStack';
-import {AuthProvider} from './src/provider/AuthProvider';
+import Providers from './src/navigation';
 
 const App = () => {
-  return (
-    <AuthProvider>
-      <MainStack />
-    </AuthProvider>
-  );
+  return <Providers />;
 };
 
 export default App;

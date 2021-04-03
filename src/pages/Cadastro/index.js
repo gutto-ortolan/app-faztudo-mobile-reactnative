@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import Estilos from './style';
-import {AuthContext} from '../../provider/AuthProvider';
+import {AuthContext} from '../../navigation/AuthProvider';
 
 const Cadastro = ({navigation}) => {
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
