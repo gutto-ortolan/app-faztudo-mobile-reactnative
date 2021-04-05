@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Estilos from './style';
 import {AuthContext} from '../../navigation/AuthProvider';
+import FormInput from '../../components/CampoTexto';
 
 const Login = ({navigation}) => {
   const [offset] = useState(new Animated.ValueXY({x: 0, y: 80}));
@@ -81,15 +82,24 @@ const Login = ({navigation}) => {
           source={require('../../assets/logo.png')}
         />
       </View>
-      <Animated.View
-        style={[
-          Estilos.container,
-          {
-            opacity: opacity,
-            transform: [{translateY: offset.y}],
-          },
-        ]}>
-        <TextInput
+      <View style={Estilos.container}>
+        <FormInput
+          labelValue={email}
+          onChangeText={setEmail}
+          placeholderText="Email"
+          iconType="user"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+        <FormInput
+          labelValue={password}
+          onChangeText={setPassword}
+          placeholderText="Senha"
+          iconType="lock"
+          secureTextEntry={true}
+        />
+        {/*<TextInput
           style={Estilos.input}
           placeholder="Email"
           autoCorrect={false}
@@ -100,7 +110,7 @@ const Login = ({navigation}) => {
           placeholder="Senha"
           autoCorrect={false}
           onChangeText={setPassword}
-        />
+        />*/}
         <TouchableOpacity
           style={Estilos.btnSubmit}
           onPress={() => login(email, password)}>
@@ -113,7 +123,7 @@ const Login = ({navigation}) => {
             Não possui cadastro? Clique aqui
           </Text>
         </TouchableOpacity>
-      </Animated.View>
+      </View>
     </KeyboardAvoidingView>
   );
 };

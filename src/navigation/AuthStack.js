@@ -55,7 +55,8 @@ const AuthStack = () => {
         name="Cadastro"
         component={Cadastro}
         options={({navigation}) => ({
-          title: '',
+          title: 'Cadastro',
+          headerTitleAlign: 'center',
           headerStyle: {
             backgroundColor: '#f9fafd',
             shadowColor: '#f9fafd',
