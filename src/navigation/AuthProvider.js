@@ -30,6 +30,7 @@ export const AuthProvider = ({children}) => {
         },
         logout: async () => {
           try {
+            console.log('Deslogando...');
             await auth().signOut();
           } catch (e) {
             console.log(e);

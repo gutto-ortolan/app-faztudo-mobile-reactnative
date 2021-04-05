@@ -38,12 +38,10 @@ export default StyleSheet.create({
   submitText: {
     color: '#222',
     fontSize: 18,
+    fontFamily: 'Roboto-Regular',
   },
   btnRegister: {
     marginTop: 10,
-  },
-  registerText: {
-    color: '#222',
   },
   checkboxContainer: {
     flexDirection: 'row',
@@ -51,13 +49,16 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
   },
   checkboxPrincipal: {
-    width: '75%',
+    width: '80%',
   },
   label: {
     marginRight: 8,
+    fontSize: 15,
+    fontFamily: 'Roboto-Regular',
   },
   labelSecundario: {
     marginRight: 8,
-    fontSize: 12,
+    fontSize: 13,
+    fontFamily: 'Roboto-Regular',
   },
 });

@@ -3,51 +3,87 @@ import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import Estilos from './style';
 import {AuthContext} from '../../navigation/AuthProvider';
+import FormInput from '../../components/CampoTexto';
+import FormPassword from '../../components/CampoSenha';
 
 const Cadastro = ({navigation}) => {
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const [profissional, setProfissional] = useState(false);
+  const [cliente, setCliente] = useState(false);
   const [email, setEmail] = useState();
   const [senha, setSenha] = useState();
+  const [nome, setNome] = useState();
+  const [telefone, setTelefone] = useState();
+  const [confirmaSenha, setConfirmaSenha] = useState();
 
   const {register} = useContext(AuthContext);
+
+  function selecionaProfissional(valor) {
+    if (valor) {
+      setProfissional(true);
+      setCliente(false);
+    } else {
+      setProfissional(false);
+      setCliente(true);
+    }
+  }
+
+  function selecionaCliente(valor) {
+    if (!valor) {
+      setProfissional(true);
+      setCliente(false);
+    } else {
+      setProfissional(false);
+      setCliente(true);
+    }
+  }
+
+  function registraUsuario(email, senha) {
+    console.log(email);
+    console.log(senha);
+    register(email, senha);
+  }
 
   return (
     <View style={Estilos.background}>
       <View style={Estilos.container}>
-        <TextInput
-          style={Estilos.input}
-          placeholder="Nome"
-          autoCorrect={false}
-          onChangeText={() => {}}
+        <FormInput
+          labelValue={nome}
+          onChangeText={setNome}
+          placeholderText="Nome"
+          iconType="user"
+          autoCapitalize="words"
+          autoCorrect={true}
         />
-        <TextInput
-          style={Estilos.input}
-          placeholder="Telefone"
+        <FormInput
+          labelValue={telefone}
+          onChangeText={setTelefone}
+          placeholderText="Telefone"
+          iconType="phone"
+          keyboardType="number-pad"
+          autoCapitalize="none"
           autoCorrect={false}
-          onChangeText={() => {}}
         />
-        <TextInput
-          style={Estilos.input}
+        <FormInput
           labelValue={email}
           onChangeText={setEmail}
-          placeholder="E-mail"
+          placeholderText="E-mail"
+          iconType="mail"
+          keyboardType="email-address"
+          autoCapitalize="none"
           autoCorrect={false}
         />
-        <TextInput
-          style={Estilos.input}
+        <FormPassword
           labelValue={senha}
           onChangeText={setSenha}
-          placeholder="Senha"
-          autoCorrect={false}
+          placeholderText="Senha"
+          iconType="lock"
         />
-
-        <TextInput
-          style={Estilos.input}
-          placeholder="Confirme a senha"
-          autoCorrect={false}
-          onChangeText={() => {}}
+        <FormPassword
+          labelValue={confirmaSenha}
+          onChangeText={setConfirmaSenha}
+          placeholderText="Confirme a senha"
+          iconType="check"
         />
-
         <View style={Estilos.checkboxPrincipal}>
           <View style={Estilos.checkboxContainer}>
             <View>
@@ -57,9 +93,8 @@ const Cadastro = ({navigation}) => {
               </Text>
             </View>
             <CheckBox
-              disabled={false}
-              value={toggleCheckBox}
-              onValueChange={newValue => setToggleCheckBox(newValue)}
+              value={profissional}
+              onValueChange={valor => selecionaProfissional(valor)}
             />
           </View>
 
@@ -71,16 +106,15 @@ const Cadastro = ({navigation}) => {
               </Text>
             </View>
             <CheckBox
-              disabled={false}
-              value={toggleCheckBox}
-              onValueChange={newValue => setToggleCheckBox(newValue)}
+              value={cliente}
+              onValueChange={valor => selecionaCliente(valor)}
             />
           </View>
         </View>
 
         <TouchableOpacity
           style={Estilos.btnSubmit}
-          onPress={() => register(email, senha)}>
+          onPress={() => registraUsuario(email, senha)}>
           <Text style={Estilos.submitText}>Cadastrar</Text>
         </TouchableOpacity>
       </View>

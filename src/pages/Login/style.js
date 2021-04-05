@@ -27,6 +27,7 @@ export default StyleSheet.create({
     fontSize: 17,
     borderRadius: 10,
     padding: 10,
+    fontFamily: 'Roboto-Regular',
   },
   btnSubmit: {
     backgroundColor: '#ffb745',
@@ -39,11 +40,13 @@ export default StyleSheet.create({
   submitText: {
     color: '#222',
     fontSize: 18,
+    fontFamily: 'Roboto-Regular',
   },
   btnRegister: {
     marginTop: 10,
   },
   registerText: {
     color: '#222',
+    fontFamily: 'Roboto-Regular',
   },
 });

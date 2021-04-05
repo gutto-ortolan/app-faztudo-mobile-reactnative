@@ -65,7 +65,7 @@ const AuthStack = () => {
           headerLeft: () => (
             <View style={{marginLeft: 10}}>
               <FontAwesome.Button
-                name="long-arrow-left"
+                name="arrow-left"
                 size={25}
                 backgroundColor="#f9fafd"
                 color="#333"

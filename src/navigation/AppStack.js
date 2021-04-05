@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -35,11 +35,11 @@ const FeedStack = ({navigation}) => (
         headerRight: () => (
           <View style={{marginRight: 10}}>
             <FontAwesome5.Button
-              name="plus"
+              name="sign-out-alt"
               size={22}
               backgroundColor="#fff"
               color="#2e64e5"
-              onPress={() => navigation.navigate('AddPost')}
+              onPress={() => {}}
             />
           </View>
         ),

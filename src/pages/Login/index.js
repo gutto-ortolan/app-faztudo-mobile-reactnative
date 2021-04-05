@@ -3,8 +3,6 @@ import {
   View,
   Text,
   KeyboardAvoidingView,
-  Image,
-  TextInput,
   TouchableOpacity,
   Animated,
   Keyboard,
@@ -12,6 +10,7 @@ import {
 import Estilos from './style';
 import {AuthContext} from '../../navigation/AuthProvider';
 import FormInput from '../../components/CampoTexto';
+import FormPassword from '../../components/CampoSenha';
 
 const Login = ({navigation}) => {
   const [offset] = useState(new Animated.ValueXY({x: 0, y: 80}));
@@ -79,38 +78,26 @@ const Login = ({navigation}) => {
             width: logo.x,
             height: logo.y,
           }}
-          source={require('../../assets/logo.png')}
+          source={require('../../assets/images/logo.png')}
         />
       </View>
       <View style={Estilos.container}>
         <FormInput
           labelValue={email}
           onChangeText={setEmail}
-          placeholderText="Email"
-          iconType="user"
+          placeholderText="E-mail"
+          iconType="mail"
           keyboardType="email-address"
           autoCapitalize="none"
           autoCorrect={false}
         />
-        <FormInput
+        <FormPassword
           labelValue={password}
           onChangeText={setPassword}
           placeholderText="Senha"
           iconType="lock"
-          secureTextEntry={true}
         />
-        {/*<TextInput
-          style={Estilos.input}
-          placeholder="Email"
-          autoCorrect={false}
-          onChangeText={setEmail}
-        />
-        <TextInput
-          style={Estilos.input}
-          placeholder="Senha"
-          autoCorrect={false}
-          onChangeText={setPassword}
-        />*/}
+
         <TouchableOpacity
           style={Estilos.btnSubmit}
           onPress={() => login(email, password)}>

@@ -1,10 +1,13 @@
-import React from 'react';
-import {View, TextInput, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {View, TextInput, StyleSheet, TouchableOpacity} from 'react-native';
 import {windowHeight, windowWidth} from '../utils/Dimensions';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const CampoTexto = ({labelValue, placeholderText, iconType, ...rest}) => {
+const CampoSenha = ({labelValue, placeholderText, iconType, ...rest}) => {
+  const [hidePass, setHidePass] = useState(true);
+
   return (
     <View style={styles.inputContainer}>
       <View style={styles.iconStyle}>
@@ -16,13 +19,19 @@ const CampoTexto = ({labelValue, placeholderText, iconType, ...rest}) => {
         numberOfLines={1}
         placeholder={placeholderText}
         placeholderTextColor="#666"
+        secureTextEntry={hidePass}
         {...rest}
       />
+      <TouchableOpacity
+        style={styles.icon}
+        onPress={() => setHidePass(!hidePass)}>
+        <Ionicons name={hidePass ? 'eye' : 'eye-off'} size={25} color="#666" />
+      </TouchableOpacity>
     </View>
   );
 };
 
-export default CampoTexto;
+export default CampoSenha;
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -52,6 +61,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Roboto-Regular',
     color: '#333',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  icon: {
+    width: '15%',
+    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },
