@@ -17,7 +17,7 @@ const Login = ({navigation}) => {
   const [opacity] = useState(new Animated.Value(0));
   const [logo] = useState(new Animated.ValueXY({x: 220, y: 245}));
 
-  const {login} = useContext(AuthContext);
+  const {login, error} = useContext(AuthContext);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
@@ -97,6 +97,8 @@ const Login = ({navigation}) => {
           placeholderText="Senha"
           iconType="lock"
         />
+
+        {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
 
         <TouchableOpacity
           style={Estilos.btnSubmit}
