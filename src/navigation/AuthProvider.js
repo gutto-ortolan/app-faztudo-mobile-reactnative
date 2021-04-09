@@ -6,22 +6,26 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
-  const [error, setError] = useState();
+  const [error, setError] = useState(null);
 
   function verificaErro(mensagem) {
     if (mensagem.match(/wrong-password/)) {
-      console.log('Senha incorreta.');
-      setError('Senha incorreta.');
+      setError('*Senha incorreta.');
     } else if (mensagem.match(/user-not-found/)) {
-      console.log('Usuário não encontrado.');
-      setError('Usuário não encontrado.');
+      setError('*Usuário não encontrado.');
+    } else if (mensagem.match(/email-already-in-use/)) {
+      setError('*Email já cadastrado. Informe outro..');
+    } else if (mensagem.match(/weak-password/)) {
+      setError(
+        '*Senha muito fraca. Informe uma senha com 6 ou mais caractéres.',
+      );
     } else {
-      console.log(mensagem);
-      setError(null);
+      setError('*Algum erro ocorreu, tente mais tarde.');
     }
   }
 
   return (
+    //salvar email na coleção usuario para fazer find na primeira tela de cadastro
     <AuthContext.Provider
       value={{
         user,
@@ -39,12 +43,19 @@ export const AuthProvider = ({children}) => {
         },
         register: async (email, senha) => {
           try {
-            await auth().createUserWithEmailAndPassword(email, senha);
+            await auth()
+              .createUserWithEmailAndPassword(email, senha)
+              .then(res => {
+                const {
+                  user: {uid},
+                } = res;
+                console.log(uid);
+              });
             console.log('Usuário cadastrado com sucesso!');
             setError(null);
           } catch (e) {
             console.log(e.message);
-            setError(e.message);
+            verificaErro(e.message);
           }
         },
         logout: async () => {

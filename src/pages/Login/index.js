@@ -11,6 +11,7 @@ import Estilos from './style';
 import {AuthContext} from '../../navigation/AuthProvider';
 import FormInput from '../../components/CampoTexto';
 import FormPassword from '../../components/CampoSenha';
+import Botao from '../../components/BotaoFormulario';
 
 const Login = ({navigation}) => {
   const [offset] = useState(new Animated.ValueXY({x: 0, y: 80}));
@@ -100,13 +101,10 @@ const Login = ({navigation}) => {
 
         {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
 
+        <Botao buttonTitle="Acessar" onPress={() => login(email, password)} />
+
         <TouchableOpacity
-          style={Estilos.btnSubmit}
-          onPress={() => login(email, password)}>
-          <Text style={Estilos.submitText}>Acessar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Cadastro')}
+          onPress={() => navigation.navigate('CadastroCredenciais')}
           style={Estilos.btnRegister}>
           <Text style={Estilos.registerText}>
             Não possui cadastro? Clique aqui

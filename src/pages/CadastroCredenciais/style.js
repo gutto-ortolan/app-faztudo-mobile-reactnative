@@ -13,7 +13,7 @@ export default StyleSheet.create({
   },
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
     width: '90%',
   },
@@ -50,6 +50,7 @@ export default StyleSheet.create({
   },
   checkboxPrincipal: {
     width: '80%',
+    marginTop: 10,
   },
   label: {
     marginRight: 8,
@@ -60,5 +61,16 @@ export default StyleSheet.create({
     marginRight: 8,
     fontSize: 13,
     fontFamily: 'Roboto-Regular',
+  },
+  containerMensagem: {
+    marginBottom: 10,
+  },
+  mensagemConta: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: '#ffb745',
+  },
+  mensagemCredencial: {
+    fontSize: 15,
   },
 });

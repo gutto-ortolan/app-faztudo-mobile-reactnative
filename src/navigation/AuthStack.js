@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
-import Cadastro from '../pages/Cadastro';
+import CadastroCredenciais from '../pages/CadastroCredenciais';
+import CadastroInformacoes from '../pages/CadastroInformacoes';
 import Login from '../pages/Login';
+import Estilos from './style';
 //import OnboardingScreen from '../screens/OnboardingScreen';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -52,25 +54,51 @@ const AuthStack = () => {
         options={{header: () => null}}
       />
       <Stack.Screen
-        name="Cadastro"
-        component={Cadastro}
+        name="CadastroCredenciais"
+        component={CadastroCredenciais}
         options={({navigation}) => ({
-          title: 'Cadastro',
+          title: '',
           headerTitleAlign: 'center',
           headerStyle: {
-            backgroundColor: '#f9fafd',
-            shadowColor: '#f9fafd',
+            backgroundColor: '#fff',
+            shadowColor: '#fff',
             elevation: 0,
           },
           headerLeft: () => (
-            <View style={{marginLeft: 10}}>
+            <View style={Estilos.btnVoltar}>
               <FontAwesome.Button
-                name="arrow-left"
-                size={25}
-                backgroundColor="#f9fafd"
-                color="#333"
-                onPress={() => navigation.navigate('Login')}
-              />
+                name="chevron-left"
+                size={13}
+                backgroundColor="#fff"
+                color="#ffb745"
+                onPress={() => navigation.navigate('Login')}>
+                <Text style={Estilos.textoVoltar}> VOLTAR</Text>
+              </FontAwesome.Button>
+            </View>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="CadastroFuncionais"
+        component={CadastroInformacoes}
+        options={({navigation}) => ({
+          title: '',
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: '#fff',
+            shadowColor: '#fff',
+            elevation: 0,
+          },
+          headerLeft: () => (
+            <View style={Estilos.btnVoltar}>
+              <FontAwesome.Button
+                name="chevron-left"
+                size={13}
+                backgroundColor="#fff"
+                color="#ffb745"
+                onPress={() => navigation.navigate('CadastroCredenciais')}>
+                <Text style={Estilos.textoVoltar}>VOLTAR</Text>
+              </FontAwesome.Button>
             </View>
           ),
         })}
