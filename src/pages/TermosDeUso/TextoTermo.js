@@ -4,7 +4,7 @@ import {View, Text} from 'react-native';
 const TermosDeUso = () => {
   return (
     <View>
-      <Text>
+      <Text style={{textAlign: 'justify', fontFamily: 'Roboto-Regular'}}>
         1. SeuApp SeuApp é um serviço online (“plataforma”) para criar usando um
         configurador (kit de construção) e gerenciamento de aplicativos móveis,
         aplicativos da Web e sites (coletivamente, “aplicativos”). Além disso, o

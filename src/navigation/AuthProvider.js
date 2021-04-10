@@ -1,6 +1,7 @@
 import React, {createContext} from 'react';
 import auth from '@react-native-firebase/auth';
 import {useState} from 'react/cjs/react.development';
+import firestore from '@react-native-firebase/firestore';
 
 export const AuthContext = createContext();
 
@@ -8,6 +9,7 @@ export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [uuid, setUuid] = useState(null);
 
   function verificaErro(mensagem) {
     if (mensagem.match(/wrong-password/)) {
@@ -29,7 +31,6 @@ export const AuthProvider = ({children}) => {
   }
 
   return (
-    //salvar email na coleção usuario para fazer find na primeira tela de cadastro
     <AuthContext.Provider
       value={{
         user,
@@ -51,7 +52,7 @@ export const AuthProvider = ({children}) => {
             verificaErro(e.message);
           }
         },
-        register: async (email, senha) => {
+        register: async (email, senha, usuario) => {
           try {
             await auth()
               .createUserWithEmailAndPassword(email, senha)
@@ -59,7 +60,13 @@ export const AuthProvider = ({children}) => {
                 const {
                   user: {uid},
                 } = res;
-                console.log(uid);
+                firestore().collection('usuario').doc(uid).set({
+                  nome: usuario.nome,
+                  email: email,
+                  telefone: usuario.telefone,
+                  tpUsuario: usuario.tpUsuario,
+                  genero: usuario.genero,
+                });
               });
             console.log('Usuário cadastrado com sucesso!');
             setError(null);

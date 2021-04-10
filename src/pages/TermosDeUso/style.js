@@ -6,7 +6,7 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#f2f2f2f2',
   },
   container: {
     flex: 1,
@@ -146,5 +146,21 @@ export default StyleSheet.create({
     color: '#ffb745',
     fontWeight: 'bold',
     textDecorationLine: 'underline',
+  },
+  buttonContainer: {
+    marginTop: 10,
+    width: 300,
+    height: windowHeight / 15,
+    backgroundColor: '#ffb745',
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 3,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    fontFamily: 'Lato-Regular',
   },
 });

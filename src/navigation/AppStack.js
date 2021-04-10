@@ -30,7 +30,7 @@ const FeedStack = ({navigation}) => (
         },
         headerStyle: {
           shadowColor: '#fff',
-          elevation: 0,
+          elevation: 3,
         },
         headerRight: () => (
           <View style={{marginRight: 10}}>

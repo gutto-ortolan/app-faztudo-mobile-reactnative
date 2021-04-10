@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Alert} from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import Estilos from './style';
 import {AuthContext} from '../../navigation/AuthProvider';
@@ -20,10 +20,11 @@ const CadastroInformacoes = ({route, navigation}) => {
   const [erroTelefone, setErroTelefone] = useState(null);
   const [erroCheck, setErroCheck] = useState(null);
   const [erroGenero, setErroGenero] = useState(null);
+  const [tpUsuario, setTpUsuario] = useState(false);
 
   const {register, error} = useContext(AuthContext);
 
-  //const credenciais = route.params?.credenciais;
+  const credenciais = route.params?.credenciais;
 
   function selecionaProfissional(valor) {
     if (valor) {
@@ -59,6 +60,11 @@ const CadastroInformacoes = ({route, navigation}) => {
     if (telefone == null) {
       setErroTelefone('Informe o seu telefone de contato');
       error = true;
+    } else {
+      if (telefone.length != 15) {
+        setErroTelefone('Informe o seu telefone de contato corretamente');
+        error = true;
+      }
     }
 
     if (!profissional && !cliente) {
@@ -76,7 +82,10 @@ const CadastroInformacoes = ({route, navigation}) => {
 
   const aceitarTermo = () => {
     if (!termo) {
-      alert('Você deve aceitar os termos para continuar.');
+      Alert.alert(
+        'Termos de Uso',
+        'Você deve aceitar os termos para continuar.',
+      );
       return false;
     }
 
@@ -85,6 +94,14 @@ const CadastroInformacoes = ({route, navigation}) => {
 
   function cadastrarUsuario() {
     if (validar() && aceitarTermo()) {
+      const usuario = {
+        nome: nome,
+        telefone: telefone,
+        tpUsuario: tpUsuario,
+        genero: genero,
+      };
+      setTpUsuario(profissional ? true : false);
+      register(credenciais.email, credenciais.senha, usuario);
     }
   }
 
@@ -200,6 +217,7 @@ const CadastroInformacoes = ({route, navigation}) => {
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('Termos');
+                setTermo(true);
               }}>
               <Text style={(Estilos.labelSecundario, Estilos.labelTermo)}>
                 Termos de uso.

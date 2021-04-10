@@ -129,9 +129,7 @@ const CadastroCredenciais = ({navigation}) => {
           </View>
         ) : null}
 
-        <TouchableOpacity
-          style={Estilos.buttonContainer}
-          onPress={() => navigation.navigate('CadastroFuncionais')}>
+        <TouchableOpacity style={Estilos.buttonContainer} onPress={continuar}>
           {loading ? (
             <View style={{flexDirection: 'row'}}>
               <ActivityIndicator color="white" />

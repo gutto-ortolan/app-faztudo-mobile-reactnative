@@ -34,6 +34,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
+    marginTop: 10,
   },
   submitText: {
     color: '#222',
