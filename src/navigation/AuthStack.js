@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import CadastroCredenciais from '../pages/CadastroCredenciais';
 import CadastroInformacoes from '../pages/CadastroInformacoes';
 import Login from '../pages/Login';
+import Termos from '../pages/TermosDeUso';
 import Estilos from './style';
 //import OnboardingScreen from '../screens/OnboardingScreen';
 
@@ -102,6 +103,11 @@ const AuthStack = () => {
             </View>
           ),
         })}
+      />
+      <Stack.Screen
+        name="Termos"
+        component={Termos}
+        options={{header: () => null}}
       />
     </Stack.Navigator>
   );

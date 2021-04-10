@@ -68,7 +68,8 @@ export default StyleSheet.create({
     color: '#ffb745',
   },
   mensagemCredencial: {
-    fontSize: 15,
+    fontSize: 13,
+    fontWeight: 'bold',
   },
   mensagemErro: {
     fontSize: 12,

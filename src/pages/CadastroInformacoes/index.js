@@ -1,23 +1,29 @@
 import React, {useState, useContext} from 'react';
 import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import {Picker} from '@react-native-community/picker';
 import Estilos from './style';
 import {AuthContext} from '../../navigation/AuthProvider';
 import FormInput from '../../components/CampoTexto';
 import CampoTelefone from '../../components/CampoTelefone';
 import Botao from '../../components/BotaoFormulario';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import ModalDropdown from 'react-native-modal-dropdown';
 
-const CadastroInformacoes = ({route}) => {
+const CadastroInformacoes = ({route, navigation}) => {
   const [termo, setTermo] = useState(false);
   const [profissional, setProfissional] = useState(false);
   const [cliente, setCliente] = useState(false);
   const [nome, setNome] = useState();
   const [telefone, setTelefone] = useState();
+  const [genero, setGenero] = useState();
+  const [erroNome, setErroNome] = useState(null);
+  const [erroTelefone, setErroTelefone] = useState(null);
+  const [erroCheck, setErroCheck] = useState(null);
+  const [erroGenero, setErroGenero] = useState(null);
 
   const {register, error} = useContext(AuthContext);
 
-  const credenciais = route.params?.credenciais;
+  //const credenciais = route.params?.credenciais;
 
   function selecionaProfissional(valor) {
     if (valor) {
@@ -39,13 +45,48 @@ const CadastroInformacoes = ({route}) => {
     }
   }
 
-  function registraUsuario(email, senha) {
-    console.log(email);
-    console.log(senha);
-    register(email, senha);
-  }
+  const validar = () => {
+    setErroNome(null);
+    setErroTelefone(null);
+    setErroCheck(null);
+    setErroGenero(null);
+    let error = false;
+    if (nome == null) {
+      setErroNome('Informe o seu nome completo');
+      error = true;
+    }
 
-  const [selectedValue, setSelectedValue] = useState('java');
+    if (telefone == null) {
+      setErroTelefone('Informe o seu telefone de contato');
+      error = true;
+    }
+
+    if (!profissional && !cliente) {
+      setErroCheck('Escolha uma das opções');
+      error = true;
+    }
+
+    if (genero == null) {
+      setErroGenero('Informe o seu gênero');
+      error = true;
+    }
+
+    return !error;
+  };
+
+  const aceitarTermo = () => {
+    if (!termo) {
+      alert('Você deve aceitar os termos para continuar.');
+      return false;
+    }
+
+    return true;
+  };
+
+  function cadastrarUsuario() {
+    if (validar() && aceitarTermo()) {
+    }
+  }
 
   return (
     <ScrollView
@@ -60,8 +101,6 @@ const CadastroInformacoes = ({route}) => {
             <Text style={Estilos.mensagemCredencial}>
               Continue seu cadastro, informe mais alguns dados!
             </Text>
-            <Text>{credenciais.email}</Text>
-            <Text>{credenciais.senha}</Text>
           </View>
 
           <FormInput
@@ -72,6 +111,11 @@ const CadastroInformacoes = ({route}) => {
             autoCapitalize="words"
             autoCorrect={true}
           />
+          {erroNome ? (
+            <View style={Estilos.containerErro}>
+              <Text style={Estilos.mensagemErro}>{erroNome}</Text>
+            </View>
+          ) : null}
           <CampoTelefone
             labelValue={telefone}
             onChangeText={setTelefone}
@@ -79,16 +123,35 @@ const CadastroInformacoes = ({route}) => {
             iconType="phone"
             autoCorrect={false}
           />
+          {erroTelefone ? (
+            <View style={Estilos.containerErro}>
+              <Text style={Estilos.mensagemErro}>{erroTelefone}</Text>
+            </View>
+          ) : null}
 
-          <Picker
-            selectedValue={selectedValue}
-            style={{height: 50, width: 150}}
-            onValueChange={(itemValue, itemIndex) =>
-              setSelectedValue(itemValue)
-            }>
-            <Picker.Item label="Java" value="java" />
-            <Picker.Item label="JavaScript" value="js" />
-          </Picker>
+          <View style={Estilos.inputContainer}>
+            <View style={Estilos.iconStyle}>
+              <Ionicons name={'transgender-outline'} size={22} color="#666" />
+            </View>
+            <View style={{marginLeft: 10}}>
+              <ModalDropdown
+                style={{width: 250}}
+                defaultValue="Gênero"
+                dropdownStyle={Estilos.dropdownStyle}
+                textStyle={Estilos.genderTextStyle}
+                dropdownTextStyle={Estilos.dropdownTextStyle}
+                options={['Masculino', 'Feminino', 'Outro']}
+                onSelect={(idx, value) => {
+                  setGenero(value);
+                }}
+              />
+            </View>
+          </View>
+          {erroGenero ? (
+            <View style={Estilos.containerErro}>
+              <Text style={Estilos.mensagemErro}>{erroGenero}</Text>
+            </View>
+          ) : null}
 
           <View style={Estilos.containerCheck}>
             <View style={Estilos.checkboxPrincipal}>
@@ -119,6 +182,11 @@ const CadastroInformacoes = ({route}) => {
                   onValueChange={valor => selecionaCliente(valor)}
                 />
               </View>
+              {erroCheck ? (
+                <View style={Estilos.containerErro}>
+                  <Text style={Estilos.mensagemErro}>{erroCheck}</Text>
+                </View>
+              ) : null}
             </View>
           </View>
 
@@ -129,16 +197,11 @@ const CadastroInformacoes = ({route}) => {
               tintColors={{true: '#ffb745', false: '#ffb745'}}
             />
             <Text style={Estilos.labelSecundario}>Concordo com os</Text>
-            <TouchableOpacity>
-              <Text
-                style={
-                  (Estilos.labelSecundario,
-                  {
-                    marginLeft: -3,
-                    color: '#ffb745',
-                    fontWeight: 'bold',
-                  })
-                }>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Termos');
+              }}>
+              <Text style={(Estilos.labelSecundario, Estilos.labelTermo)}>
                 Termos de uso.
               </Text>
             </TouchableOpacity>
@@ -146,10 +209,7 @@ const CadastroInformacoes = ({route}) => {
 
           {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
 
-          <Botao
-            buttonTitle="Criar a minha conta"
-            onPress={() => registraUsuario(usuario1.nome, usuario1.sobrenome)}
-          />
+          <Botao buttonTitle="Criar a minha conta" onPress={cadastrarUsuario} />
         </View>
       </View>
     </ScrollView>

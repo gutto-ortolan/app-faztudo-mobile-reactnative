@@ -3,7 +3,6 @@ import {View, Text, ActivityIndicator, TouchableOpacity} from 'react-native';
 import Estilos from './style';
 import FormInput from '../../components/CampoTexto';
 import FormPassword from '../../components/CampoSenha';
-import Botao from '../../components/BotaoFormulario';
 import firestore from '@react-native-firebase/firestore';
 
 const CadastroCredenciais = ({navigation}) => {
@@ -132,7 +131,7 @@ const CadastroCredenciais = ({navigation}) => {
 
         <TouchableOpacity
           style={Estilos.buttonContainer}
-          onPress={() => continuar()}>
+          onPress={() => navigation.navigate('CadastroFuncionais')}>
           {loading ? (
             <View style={{flexDirection: 'row'}}>
               <ActivityIndicator color="white" />
