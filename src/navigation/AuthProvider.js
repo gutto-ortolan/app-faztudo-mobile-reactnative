@@ -7,6 +7,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   function verificaErro(mensagem) {
     if (mensagem.match(/wrong-password/)) {
@@ -19,9 +20,12 @@ export const AuthProvider = ({children}) => {
       setError(
         '*Senha muito fraca. Informe uma senha com 6 ou mais caractéres.',
       );
+    } else if (mensagem.match(/invalid-email/)) {
+      setError('*E-mail inválido.');
     } else {
       setError('*Algum erro ocorreu, tente mais tarde.');
     }
+    setLoading(false);
   }
 
   return (
@@ -31,9 +35,15 @@ export const AuthProvider = ({children}) => {
         user,
         setUser,
         error,
+        loading,
         login: async (email, senha) => {
           try {
-            await auth().signInWithEmailAndPassword(email, senha);
+            setLoading(true);
+            await auth()
+              .signInWithEmailAndPassword(email, senha)
+              .then(res => {
+                setLoading(true);
+              });
             console.log('Usuário logado com sucesso!');
             setError(null);
           } catch (e) {
@@ -61,6 +71,7 @@ export const AuthProvider = ({children}) => {
         logout: async () => {
           try {
             console.log('Deslogando...');
+            setLoading(false);
             await auth().signOut();
             setError(null);
           } catch (e) {

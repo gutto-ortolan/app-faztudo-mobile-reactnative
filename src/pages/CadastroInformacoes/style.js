@@ -7,13 +7,9 @@ export default StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
   },
-  containerLogo: {
-    flex: 1,
-    justifyContent: 'center',
-  },
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
     width: '90%',
   },
@@ -52,6 +48,10 @@ export default StyleSheet.create({
     width: '80%',
     marginTop: 10,
   },
+  containerCheck: {
+    alignItems: 'center',
+    width: '100%',
+  },
   label: {
     marginRight: 8,
     fontSize: 15,
@@ -71,7 +71,8 @@ export default StyleSheet.create({
     color: '#ffb745',
   },
   mensagemCredencial: {
-    fontSize: 15,
+    fontSize: 13,
+    fontWeight: 'bold',
   },
   checkboxTermosCotainer: {
     flexDirection: 'row',

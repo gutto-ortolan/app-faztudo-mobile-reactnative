@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {windowHeight, windowWidth} from '../../utils/Dimensions';
 
 export default StyleSheet.create({
   background: {
@@ -10,6 +11,8 @@ export default StyleSheet.create({
   containerLogo: {
     flex: 1,
     justifyContent: 'center',
+    marginTop: 30,
+    marginBottom: 50,
   },
   container: {
     flex: 1,
@@ -29,14 +32,6 @@ export default StyleSheet.create({
     padding: 10,
     fontFamily: 'Roboto-Regular',
   },
-  btnSubmit: {
-    backgroundColor: '#ffb745',
-    width: '90%',
-    height: 45,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 10,
-  },
   submitText: {
     color: '#222',
     fontSize: 18,
@@ -48,5 +43,32 @@ export default StyleSheet.create({
   registerText: {
     color: '#222',
     fontFamily: 'Roboto-Regular',
+  },
+  mensagemErro: {
+    fontSize: 12,
+    color: 'red',
+  },
+  containerErro: {
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    width: '100%',
+    marginTop: -10,
+    marginBottom: 5,
+  },
+  buttonContainer: {
+    marginTop: 10,
+    width: '100%',
+    height: windowHeight / 15,
+    backgroundColor: '#ffb745',
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 3,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    fontFamily: 'Lato-Regular',
   },
 });

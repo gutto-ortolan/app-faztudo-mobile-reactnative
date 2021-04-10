@@ -1,53 +1,82 @@
-import React, {useState, useContext} from 'react';
-import {View, Text} from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
+import React, {useState} from 'react';
+import {View, Text, ActivityIndicator, TouchableOpacity} from 'react-native';
 import Estilos from './style';
-import {AuthContext} from '../../navigation/AuthProvider';
 import FormInput from '../../components/CampoTexto';
 import FormPassword from '../../components/CampoSenha';
 import Botao from '../../components/BotaoFormulario';
+import firestore from '@react-native-firebase/firestore';
 
 const CadastroCredenciais = ({navigation}) => {
-  const [profissional, setProfissional] = useState(false);
-  const [cliente, setCliente] = useState(false);
   const [email, setEmail] = useState();
   const [senha, setSenha] = useState();
-  const [nome, setNome] = useState();
-  const [telefone, setTelefone] = useState();
   const [confirmaSenha, setConfirmaSenha] = useState();
+  const [errorEmail, setErrorEmail] = useState(null);
+  const [errorSenha, setErrorSenha] = useState(null);
+  const [errorConfirmaSenha, setErrorConfirmaSenha] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const {register, error} = useContext(AuthContext);
+  const validar = () => {
+    setErrorEmail(null);
+    setErrorSenha(null);
+    setErrorConfirmaSenha(null);
+    let error = false;
+    let temSenha = false;
+    if (email == null || email.indexOf('@') == -1 || email.indexOf('.') == -1) {
+      setErrorEmail('Informe um e-mail válido');
+      error = true;
+    }
 
-  const usuario = {
-    nome: 'augusto163@gmail.com',
-    sobrenome: '123456',
+    if (senha == null || senha.length < 6) {
+      setErrorSenha('Informe uma senha de 6 ou mais caractéres');
+      error = true;
+    } else {
+      temSenha = true;
+    }
+
+    if (confirmaSenha == null) {
+      setErrorConfirmaSenha('Informe a confirmação da senha');
+      error = true;
+    } else {
+      if (senha != confirmaSenha) {
+        setErrorConfirmaSenha('As senhas não são iguais. Tente novamente');
+        error = true;
+      }
+    }
+
+    return !error;
   };
 
-  function selecionaProfissional(valor) {
-    if (valor) {
-      setProfissional(true);
-      setCliente(false);
-    } else {
-      setProfissional(false);
-      setCliente(true);
+  async function continuar() {
+    if (validar()) {
+      setLoading(true);
+      await firestore()
+        .collection('usuario')
+        .where('email', '==', email)
+        .get()
+        .then(querySnapshot => {
+          if (querySnapshot.size == 0) {
+            navigation.navigate('CadastroFuncionais', {
+              credenciais: credenciais,
+            });
+            setLoading(false);
+            setErrorEmail(null);
+            setErrorSenha(null);
+            setErrorConfirmaSenha(null);
+            setError(null);
+          } else {
+            setError('*O e-mail informado já foi cadastrado');
+            setLoading(false);
+          }
+        });
+      //
     }
   }
 
-  function selecionaCliente(valor) {
-    if (!valor) {
-      setProfissional(true);
-      setCliente(false);
-    } else {
-      setProfissional(false);
-      setCliente(true);
-    }
-  }
-
-  function registraUsuario(email, senha) {
-    console.log(email);
-    console.log(senha);
-    register(email, senha);
-  }
+  const credenciais = {
+    email: email,
+    senha: senha,
+  };
 
   return (
     <View style={Estilos.background}>
@@ -67,27 +96,52 @@ const CadastroCredenciais = ({navigation}) => {
           autoCapitalize="none"
           autoCorrect={false}
         />
+        {errorEmail ? (
+          <View style={Estilos.containerErro}>
+            <Text style={Estilos.mensagemErro}>{errorEmail}</Text>
+          </View>
+        ) : null}
         <FormPassword
           labelValue={senha}
           onChangeText={setSenha}
           placeholderText="Senha"
           iconType="lock"
         />
+        {errorSenha ? (
+          <View style={Estilos.containerErro}>
+            <Text style={Estilos.mensagemErro}>{errorSenha}</Text>
+          </View>
+        ) : null}
         <FormPassword
           labelValue={confirmaSenha}
           onChangeText={setConfirmaSenha}
           placeholderText="Confirme a senha"
           iconType="check"
         />
+        {errorConfirmaSenha ? (
+          <View style={Estilos.containerErro}>
+            <Text style={Estilos.mensagemErro}>{errorConfirmaSenha}</Text>
+          </View>
+        ) : null}
 
-        {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
+        {error ? (
+          <View style={Estilos.containerMensagemErro}>
+            <Text style={{color: 'red'}}>{error}</Text>
+          </View>
+        ) : null}
 
-        <Botao
-          buttonTitle="Continuar"
-          onPress={() =>
-            navigation.navigate('CadastroFuncionais', {user: usuario})
-          }
-        />
+        <TouchableOpacity
+          style={Estilos.buttonContainer}
+          onPress={() => continuar()}>
+          {loading ? (
+            <View style={{flexDirection: 'row'}}>
+              <ActivityIndicator color="white" />
+              <Text style={Estilos.buttonText}>Verificando</Text>
+            </View>
+          ) : (
+            <Text style={Estilos.buttonText}>Continuar</Text>
+          )}
+        </TouchableOpacity>
       </View>
     </View>
   );

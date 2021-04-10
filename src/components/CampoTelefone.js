@@ -9,7 +9,7 @@ const CampoTelefone = ({labelValue, placeholderText, iconType, ...rest}) => {
   return (
     <View style={styles.inputContainer}>
       <View style={styles.iconStyle}>
-        <AntDesign name={iconType} size={25} color="#666" />
+        <AntDesign name={iconType} size={22} color="#666" />
       </View>
       <TextInputMask
         value={labelValue}

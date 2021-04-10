@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {windowHeight, windowWidth} from '../../utils/Dimensions';
 
 export default StyleSheet.create({
   background: {
@@ -6,10 +7,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
-  },
-  containerLogo: {
-    flex: 1,
-    justifyContent: 'center',
   },
   container: {
     flex: 1,
@@ -72,5 +69,37 @@ export default StyleSheet.create({
   },
   mensagemCredencial: {
     fontSize: 15,
+  },
+  mensagemErro: {
+    fontSize: 12,
+    color: 'red',
+  },
+  containerErro: {
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    width: '100%',
+    marginTop: -10,
+    marginBottom: 5,
+  },
+  containerMensagemErro: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
+  buttonContainer: {
+    marginTop: 10,
+    width: '100%',
+    height: windowHeight / 15,
+    backgroundColor: '#ffb745',
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 3,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    fontFamily: 'Lato-Regular',
   },
 });

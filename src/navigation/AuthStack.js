@@ -72,7 +72,7 @@ const AuthStack = () => {
                 backgroundColor="#fff"
                 color="#ffb745"
                 onPress={() => navigation.navigate('Login')}>
-                <Text style={Estilos.textoVoltar}> VOLTAR</Text>
+                <Text style={Estilos.textoVoltar}> LOGIN</Text>
               </FontAwesome.Button>
             </View>
           ),

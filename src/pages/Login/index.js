@@ -1,117 +1,129 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   Text,
   KeyboardAvoidingView,
   TouchableOpacity,
-  Animated,
-  Keyboard,
+  Image,
+  ScrollView,
+  StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
 import Estilos from './style';
 import {AuthContext} from '../../navigation/AuthProvider';
 import FormInput from '../../components/CampoTexto';
 import FormPassword from '../../components/CampoSenha';
-import Botao from '../../components/BotaoFormulario';
 
 const Login = ({navigation}) => {
-  const [offset] = useState(new Animated.ValueXY({x: 0, y: 80}));
-  const [opacity] = useState(new Animated.Value(0));
-  const [logo] = useState(new Animated.ValueXY({x: 220, y: 245}));
-
-  const {login, error} = useContext(AuthContext);
+  const {login, error, loading} = useContext(AuthContext);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [erroEmail, setErroEmail] = useState(null);
+  const [erroSenha, setErroSenha] = useState(null);
 
-  useEffect(() => {
-    keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      keyboardDidShow,
-    );
-    keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      keyboardDidHide,
-    );
+  const validar = () => {
+    setErroEmail(null);
+    setErroSenha(null);
+    let error = false;
+    if (email == null || email.indexOf('@') == -1 || email.indexOf('.') == -1) {
+      setErroEmail('Preencha seu e-mail corretamente');
+      error = true;
+    }
 
-    Animated.parallel([
-      Animated.spring(offset.y, {
-        toValue: 0,
-        speed: 4,
-        bounciness: 20,
-      }),
-      Animated.timing(opacity, {
-        toValue: 1,
-        duration: 200,
-      }),
-    ]).start();
-  }, []);
+    if (password == null) {
+      setErroSenha('Preencha sua senha corretamente');
+      error = true;
+    }
 
-  function keyboardDidShow() {
-    Animated.parallel([
-      Animated.timing(logo.x, {
-        toValue: 105,
-        duration: 10,
-      }),
-      Animated.timing(logo.y, {
-        toValue: 115,
-        duration: 10,
-      }),
-    ]).start();
-  }
+    return !error;
+  };
 
-  function keyboardDidHide() {
-    Animated.parallel([
-      Animated.timing(logo.x, {
-        toValue: 220,
-        duration: 100,
-      }),
-      Animated.timing(logo.y, {
-        toValue: 245,
-        duration: 100,
-      }),
-    ]).start();
-  }
+  const acessar = () => {
+    if (validar()) {
+      login(email, password);
+    }
+  };
+
+  const cadastrar = () => {
+    setErroEmail(null);
+    setErroSenha(null);
+    navigation.navigate('CadastroCredenciais');
+  };
 
   return (
-    <KeyboardAvoidingView style={Estilos.background}>
-      <View style={Estilos.containerLogo}>
-        <Animated.Image
-          style={{
-            width: logo.x,
-            height: logo.y,
-          }}
-          source={require('../../assets/images/logo.png')}
-        />
-      </View>
-      <View style={Estilos.container}>
-        <FormInput
-          labelValue={email}
-          onChangeText={setEmail}
-          placeholderText="E-mail"
-          iconType="mail"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
-        <FormPassword
-          labelValue={password}
-          onChangeText={setPassword}
-          placeholderText="Senha"
-          iconType="lock"
-        />
+    <ScrollView
+      style={{backgroundColor: 'white'}}
+      contentContainerStyle={{
+        marginTop: 20,
+      }}>
+      <KeyboardAvoidingView style={Estilos.background}>
+        <View style={Estilos.containerLogo}>
+          <Image
+            style={{
+              width: 245,
+              height: 220,
+            }}
+            source={require('../../assets/images/logo.png')}
+          />
+        </View>
+        <View style={Estilos.container}>
+          <FormInput
+            labelValue={email}
+            onChangeText={setEmail}
+            placeholderText="E-mail"
+            iconType="mail"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          {erroEmail ? (
+            <View style={Estilos.containerErro}>
+              <Text style={Estilos.mensagemErro}>{erroEmail}</Text>
+            </View>
+          ) : null}
+          <FormPassword
+            labelValue={password}
+            onChangeText={setPassword}
+            placeholderText="Senha"
+            iconType="lock"
+          />
+          {erroSenha ? (
+            <View style={Estilos.containerErro}>
+              <Text style={Estilos.mensagemErro}>{erroSenha}</Text>
+            </View>
+          ) : null}
 
-        {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
+          {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
 
-        <Botao buttonTitle="Acessar" onPress={() => login(email, password)} />
+          <TouchableOpacity
+            style={Estilos.buttonContainer}
+            onPress={() => acessar()}>
+            {loading ? (
+              <View style={{flexDirection: 'row'}}>
+                <ActivityIndicator color="white" />
+                <Text style={Estilos.buttonText}>Carregando</Text>
+              </View>
+            ) : (
+              <Text style={Estilos.buttonText}>Acessar</Text>
+            )}
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => navigation.navigate('CadastroCredenciais')}
-          style={Estilos.btnRegister}>
-          <Text style={Estilos.registerText}>
-            Não possui cadastro? Clique aqui
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </KeyboardAvoidingView>
+          <TouchableOpacity
+            onPress={() => cadastrar()}
+            style={Estilos.btnRegister}>
+            <Text style={Estilos.registerText}>
+              Não possui cadastro? Clique aqui
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {}}
+            style={(Estilos.btnRegister, {marginTop: 20})}>
+            <Text style={Estilos.registerText}>Esqueceu a senha?</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
