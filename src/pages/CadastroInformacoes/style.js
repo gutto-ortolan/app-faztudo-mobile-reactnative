@@ -147,4 +147,20 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     textDecorationLine: 'underline',
   },
+  buttonContainer: {
+    marginTop: 10,
+    width: '100%',
+    height: windowHeight / 15,
+    backgroundColor: '#ffb745',
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 3,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    fontFamily: 'Lato-Regular',
+  },
 });

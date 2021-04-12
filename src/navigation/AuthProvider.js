@@ -8,6 +8,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
+  const [errorCadastro, setErrorCadastro] = useState(null);
   const [loading, setLoading] = useState(false);
   const [uuid, setUuid] = useState(null);
 
@@ -18,14 +19,20 @@ export const AuthProvider = ({children}) => {
       setError('*Usuário não encontrado.');
     } else if (mensagem.match(/email-already-in-use/)) {
       setError('*Email já cadastrado. Informe outro..');
+      setErrorCadastro('*Email já cadastrado. Informe outro..');
     } else if (mensagem.match(/weak-password/)) {
       setError(
         '*Senha muito fraca. Informe uma senha com 6 ou mais caractéres.',
       );
+      setErrorCadastro(
+        '*Senha muito fraca. Informe uma senha com 6 ou mais caractéres.',
+      );
     } else if (mensagem.match(/invalid-email/)) {
       setError('*E-mail inválido.');
+      setErrorCadastro('*E-mail inválido.');
     } else {
       setError('*Algum erro ocorreu, tente mais tarde.');
+      setErrorCadastro('*Algum erro ocorreu, tente mais tarde.');
     }
     setLoading(false);
   }
@@ -36,6 +43,7 @@ export const AuthProvider = ({children}) => {
         user,
         setUser,
         error,
+        errorCadastro,
         loading,
         login: async (email, senha) => {
           try {
@@ -54,6 +62,7 @@ export const AuthProvider = ({children}) => {
         },
         register: async (email, senha, usuario) => {
           try {
+            setLoading(true);
             await auth()
               .createUserWithEmailAndPassword(email, senha)
               .then(res => {
@@ -69,7 +78,7 @@ export const AuthProvider = ({children}) => {
                 });
               });
             console.log('Usuário cadastrado com sucesso!');
-            setError(null);
+            setErrorCadastro(null);
           } catch (e) {
             console.log(e.message);
             verificaErro(e.message);

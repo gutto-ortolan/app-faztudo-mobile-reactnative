@@ -1,5 +1,12 @@
 import React, {useState, useContext} from 'react';
-import {View, Text, TouchableOpacity, ScrollView, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import Estilos from './style';
 import {AuthContext} from '../../navigation/AuthProvider';
@@ -20,9 +27,9 @@ const CadastroInformacoes = ({route, navigation}) => {
   const [erroTelefone, setErroTelefone] = useState(null);
   const [erroCheck, setErroCheck] = useState(null);
   const [erroGenero, setErroGenero] = useState(null);
-  const [tpUsuario, setTpUsuario] = useState(false);
+  const [tpUsuario, setTpUsuario] = useState();
 
-  const {register, error} = useContext(AuthContext);
+  const {register, errorCadastro, loading} = useContext(AuthContext);
 
   const credenciais = route.params?.credenciais;
 
@@ -97,10 +104,9 @@ const CadastroInformacoes = ({route, navigation}) => {
       const usuario = {
         nome: nome,
         telefone: telefone,
-        tpUsuario: tpUsuario,
+        tpUsuario: profissional ? 'P' : 'C',
         genero: genero,
       };
-      setTpUsuario(profissional ? true : false);
       register(credenciais.email, credenciais.senha, usuario);
     }
   }
@@ -225,9 +231,22 @@ const CadastroInformacoes = ({route, navigation}) => {
             </TouchableOpacity>
           </View>
 
-          {error ? <Text style={{color: 'red'}}>{error}</Text> : null}
+          {errorCadastro ? (
+            <Text style={{color: 'red'}}>{errorCadastro}</Text>
+          ) : null}
 
-          <Botao buttonTitle="Criar a minha conta" onPress={cadastrarUsuario} />
+          <TouchableOpacity
+            style={Estilos.buttonContainer}
+            onPress={cadastrarUsuario}>
+            {loading ? (
+              <View style={{flexDirection: 'row'}}>
+                <ActivityIndicator color="white" />
+                <Text style={Estilos.buttonText}>Carregando</Text>
+              </View>
+            ) : (
+              <Text style={Estilos.buttonText}>Criar a minha conta</Text>
+            )}
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
